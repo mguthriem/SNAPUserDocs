@@ -40,7 +40,7 @@ Planned scope for SNAPRed that Phase 2 does not include:
 3. Management of complex sample container effects
 4. a GUI 
 
-To emphasis point 3: SNAPRed primarily exists as a "Backend". To facilitate testing, a "Test Panel" is provided. This is a minimalist GUI and only provides limited interactivity.
+To emphasis point 4: SNAPRed primarily exists as a "Backend". To facilitate testing, a "Test Panel" is provided. This is a minimalist GUI and only provides limited interactivity.
 
 ## How do I run SNAPRed?
 

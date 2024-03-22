@@ -25,7 +25,7 @@ An important consideration due to the nature of the event mode data type is that
 
 ## Lite mode
 
-During prototyping of SNAPRed, the concept of `Lite mode` was developed. This is a process where the entire input event list is relabelled such that events within a fixed 8x8 grid of native pixels on the detector phase are given the same "super pixel" ID. The output of this is process is a "Lite workspace" that contains the same number of events as the original, but has 64 times fewer pixels, with almost imperceptible loss of diffraction resolution.
+During prototyping of SNAPRed, the concept of `Lite mode` was developed. This is a process where the entire input event list is relabelled such that events within a fixed 8x8 grid of native pixels on the detector phase are given the same "super pixel" ID. The output of this is process is a "Lite workspace" that contains the same number of events as the original, but has 64 times fewer pixels (18432 _versus 1179648), with almost imperceptible loss of diffraction resolution.
 
 Lite mode greatly accelerates all calibration and reduction operations that iterate through pixels (for example vanadium absorption correction taking 60 minutes in regular SNAP occurs in ~1 minute for SNAP Lite. Furthermore, Lite mode creates the potential to greatly enhance the effectiveness of event compression (via mantid algorithm `CompressEvents`), although this latter functionality is not implemented in Phase 2
 
@@ -35,13 +35,13 @@ An important consequence is that the activation of `Lite Mode` impacts all files
 
 SNAPRed's diffraction detector system consists of two movable Anger cameras: highly pixelated TOF sensitive neutron detectors. This creates a natural flexibility in how detector pixels can be grouped together. As a general rule, adding more pixels together improves counting statistics at the expense of diffraction resolution. A consequence of this is a user should have the ability to easily switch between different pixel grouping schemes (PGS) that combine pixels. Each PGS will consist of a number of subgroups each with their own ID.
 
-Thus, SNAPRed is intended to be able to manage multiple different PGS and to reduce data from a specified list of these (allowing users multiple views on their data after reduction). The "standard" PGS based on combinations of detector components ('All','Bank','Column','2-4') exist as defaults, however, it is also possible to specify unique PGS for any given instrument state. An example of this might be a scheme based on scattering angle of pixels. Such schemes differ from detector-component based schemes as the corresponding pixel ID's will change if the detector moves. 
+Thus, SNAPRed is intended to be able to manage multiple different PGS and to reduce data from a specified list of these (allowing users multiple views on their data after reduction). The "standard" PGS based on combinations of detector components (`All`,`Bank`,`Column`,`2-4`) exist as defaults, however, it is also possible to specify unique PGS for any given instrument state. An example of this might be a scheme based on scattering angle of pixels. Such schemes differ from detector-component based schemes as the corresponding pixel ID's will change if the detector moves. 
 
-As they involve pixels IDs, PGS have to be specified separately for both Lite and non-Lite modes. 
+As they involve pixels IDs, PGS _must_ be specified separately for both Lite and non-Lite modes. 
 
 ## Data binning considerations
 
-Appropriate management of large event TOF diffraction datasets requires intelligent histogramming and/or compression of the raw event data. In general, this operation is lossy and so the binning parameters used must be chosen correctly. In SNAPRed, the appropriate binning parameters are properties of each subgroup for a given state and are calculated for each of these combinations. This calculation is dones on the basis of a set of defined instrument parameters, namely, the incoming wavelength band and the instrument diffraction resolution, the latter is parameterised by the values of %\.
+Appropriate management of large event TOF diffraction datasets requires intelligent histogramming and/or compression of the raw event data. In general, this operation is lossy and so the binning parameters used must be chosen correctly. In SNAPRed, the appropriate binning parameters are properties of each subgroup for a given state and are calculated for each of these combinations. This calculation is dones on the basis of a set of defined instrument parameters, namely, the incoming wavelength band and the instrument diffraction resolution, the latter is parameterised by the TOF-resolution equation - {cite:p}`WORLTON1976`- and a specification of the relevant value for SNAP.
 
 User interaction is limited to the specification of the number of bins `NBin` within the FWHM of a measured Bragg peak. This approach exploits logarithmic binning combined with the approximately linear dependence of resolution on wavelength for a TOF diffractometer and means that the chosen `NBin` number of points will be constant for any peak in any subgroup in any state of the instrument. The value used should reflect the final approach to fitting peak shapes and be sufficient to support the numbner of parameters needed. Typically, this would include a Rietveld fit using a back-to-back exponential convolved with a psuedovoigt peak model, which has at least 5 parameters for each peak (position, width, gauss-Lorentz mixing,and the leading and trailing edge exponents) in addition to background model. 
 
@@ -63,11 +63,13 @@ In turn, we would then refer to the $j^{th}$ element within the $i^{th}$ array a
 
 An important operation in data handling within `SNAPRed` is diffraction focusing, whereby the data in multiple spectra are combined, effectively replacing many pixels with a single "super pixel" for each group as defined by a pixel grouping scheme. We will represent diffraction focussed data by enclosing the affected array in $\{$ and $\}$ brackets but otherwise use a similar indexing, using capital letters for the indices. Thus, if we used a pixel grouping scheme with $N_{grp}$ groups of pixels, this will result in $N_{grp}$ arrays containing d-spacings and the array for the $I^{th}$ group would be $\{\mathbf{d}\}_I$. As above, we can refer to the $J^{th}$ element within this array using $\{d\}_{I,J}$
 
+### The symbols
+
 | Symbol       | Units         | Description |
 |-------       |-------        |-------------|
 |$T$  | $\mu$s        | TOF values|
 |$d$  | Å        | d-spacing values|
 |$Z$  | $\mu$s          | zeroth order diffractometer constant |
-|$C$  | $\mu$s.$Å$^{-1}$          | first order diffractometer constant |
-|$A$  | $\mu$s.$Å$^{-2}$          | second order diffractometer constant |  
+|$C$  | $\mu$s.Å$^{-1}$          | first order diffractometer constant |
+|$A$  | $\mu$s.Å$^{-2}$          | second order diffractometer constant |  
 
