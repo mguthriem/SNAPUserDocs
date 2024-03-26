@@ -14,7 +14,7 @@ The approach applied by `PDCalibration` is to fit the Bragg peaks in each input 
 
     $E_R = FWHM*M_{FWHM-R}+M_{tail}/\beta _d$
 
-* Using the calculated peak extents, the list of peaks is purged of any peaks that overlap. Since the calculation respects the varying (angular-dependent) diffraction resolution, different peaks maybe purged in different groups (with typically higher angle groups retaining more peaks) 
+* Using the calculated peak extents, the list of peaks is purged of any peaks that overlap. Since the calculation respects the varying (angular-dependent) diffraction resolution, different peaks may be purged in different groups. At least two peaks per group are required for `PDCalibration` to execute, but a larger number of peaks are recommended. 
 
 Prior to execution, the user is able to fine tune the list of peaks by adjusting the minimum and maximum d-spacing of the list and the peak intensity threshold $I_{thresh}$. `SNAPRed` provides a visualisation of data and peak extents to support optimising the peak list prior to execution of group calibration.
 

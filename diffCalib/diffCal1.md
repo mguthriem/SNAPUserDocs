@@ -64,4 +64,4 @@ The next step is to apply these offsets via an operation that returns the correc
 
 ## Masking
 
-A mask is automatically created for any pixels where this operation fails and. This mask is persisted as a property of the calibration and, subsequently, these pixels will not be included in data reduction using that calibration. During the calibration process, it's important to inspect the output mask to identify pathlological issues (high background in the input data, for instance) with cross correlation that have been observed to lead to large numbers of pixels being masked.
+A mask is automatically created for any pixels where this operation fails and. This mask is persisted to disk as a property of the calibration and, subsequently, these pixels will not be included in data reduction using that calibration. During the calibration process, it's important to inspect the output mask to identify pathlological issues (high background in the input data, for instance) with cross correlation that have been observed to lead to large numbers of pixels being masked.
