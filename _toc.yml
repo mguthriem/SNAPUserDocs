@@ -10,4 +10,5 @@ chapters:
   - file: diffCalib/diffCal1
   - file: diffCalib/diffCal2
   - file: diffCalib/diffCal_assessment_output
+- file: normCalib/overview
 - file: bib

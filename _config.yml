@@ -3,7 +3,7 @@
 
 title: SNAPRed User Documentation v0.2
 author: Malcolm Guthrie
-logo: logo2.jpg
+logo: logo2.png
 
 # Force re-execution of notebooks on each build.
 # See https://jupyterbook.org/content/execute.html

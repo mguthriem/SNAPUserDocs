@@ -12,7 +12,7 @@ This section specifies the process used by `SNAPRed` for the former goal. The la
 
 The inputs to `Diffraction Calibration` are:
 
-1. A set of neutron powder diffraction data from a known calibrant material, measured in a given instrument state. 
+1. A set of neutron powder diffraction data from a known calibrant material, measured in a given instrument state. This is specified via its run number
 2. Crystallographic information on the calibrant material (see below)
 3. A pixel grouping scheme (e.g. `Column` or any arbitrary scheme) that is used during calibration (as described below), but does not impose any constraint on any subsequent choice of grouping used during reduction.   
 4. A set of parameters governing the calibration workflow. Some of these are fixed and some are variable. The ultimate goal is to fix everything possible to fully automate the calibration process
