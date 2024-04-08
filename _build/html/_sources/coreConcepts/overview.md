@@ -32,7 +32,7 @@ A design requirement of SNAPRed is to efficiently manage events. _This is not ye
 (label_lite)=
 ## Lite mode
 
-During prototyping of SNAPRed, in part addressing the efficient management of events describe above, the concept of `Lite mode` was developed. This is a process where the entire input event list is relabelled such that events within a fixed 8x8 grid of native pixels on the detector phase are given the same "super pixel" ID. The output of this is process is a "Lite workspace" that contains the same number of events as the original, but has 64 times fewer pixels (18*32x32=18432 _versus_ 18*256x256=1179648), with almost imperceptible loss of diffraction resolution.
+During prototyping of SNAPRed, in part addressing the efficient management of events describe above, the concept of `Lite mode` was developed. This is a process where the entire input event list is relabelled such that events within a fixed 8x8 grid of native pixels on the detector phase are given the same "super pixel" ID. The output of this is process is a "Lite workspace" that contains the same number of events as the original, but has 64 times fewer pixels (18 modules of 32x32=18432 _versus_ 18 modules of 256x256=1179648), with almost imperceptible loss of diffraction resolution.
 
 Lite mode greatly accelerates all calibration and reduction operations that iterate through pixels (for example vanadium absorption correction taking 60 minutes in regular SNAP occurs in ~1 minute for SNAP Lite. Furthermore, Lite mode creates the potential to greatly enhance the effectiveness of event compression (via mantid algorithm `CompressEvents`), although this latter functionality is not implemented in Phase 2
 
