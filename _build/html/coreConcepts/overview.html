@@ -1,0 +1,652 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Core Concepts in SNAPRed &#8212; SNAPRed User Documentation v0.2</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=36754332"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'coreConcepts/overview';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Global configuration" href="applicationYML.html" />
+    <link rel="prev" title="SNAPRed User Docs v 0.2" href="../intro.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo2.png" class="logo__image only-light" alt="SNAPRed User Documentation v0.2 - Home"/>
+    <script>document.write(`<img src="../_static/logo2.png" class="logo__image only-dark" alt="SNAPRed User Documentation v0.2 - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    SNAPRed User Docs v 0.2
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">Core Concepts in SNAPRed</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="applicationYML.html">Global configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../diffCalib/overview.html">Diffraction Calibration</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../diffCalib/diffCal1.html">Diffraction Calibration part 1: pixel calibration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../diffCalib/diffCal2.html">Diffraction Calibration Part 2: Group Calibration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../diffCalib/diffCal_assessment_output.html">Calibration assessment, completion and output</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../normCalib/overview.html">Normalisation Calibration</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../testPanel/overview.html">Test Panel: User Guide</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../testPanel/difcal.html">The DifCal Tab</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testPanel/normcal.html">The NormCal Tab</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../bib.html">References</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/neutrons/SNAPRed" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/neutrons/SNAPRed/issues/new?title=Issue%20on%20page%20%2FcoreConcepts/overview.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/coreConcepts/overview.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Core Concepts in SNAPRed</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#instrument-states">Instrument States</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-types">Data types</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lite-mode">Lite mode</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pixel-grouping-definitions">Pixel Grouping Definitions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-binning-considerations">Data binning considerations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#symbols-used-in-this-book">Symbols used in this book</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-note-on-indexing">A note on indexing</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-symbols">The symbols</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="core-concepts-in-snapred">
+<span id="coreconcepts"></span><h1>Core Concepts in SNAPRed<a class="headerlink" href="#core-concepts-in-snapred" title="Link to this heading">#</a></h1>
+<section id="instrument-states">
+<h2>Instrument States<a class="headerlink" href="#instrument-states" title="Link to this heading">#</a></h2>
+<p>The highly re-configurable nature of the SNAP instrumentation necessitates automated management. SNAPRed does this via creation and management of Instrument States. States are defined on the basis of a unique combination:</p>
+<ul class="simple">
+<li><p>East detector angle</p></li>
+<li><p>West detector angle</p></li>
+<li><p>Guide status</p></li>
+<li><p>Central wavelength band</p></li>
+<li><p>Source frequency</p></li>
+</ul>
+<p>SNAPRed can automatically identify state, on the basis of a provided run number, via accessing the relevant process variables stored in the logs of the corresponding raw data file. SNAPRed can also create and instantiate a new state automatically, although this functionality is limited to users who have write privilege to the <code class="docutils literal notranslate"><span class="pre">/SNS/SNAP/shared</span></code> directory (i.e. Beamline Staff). A “human-readable” name can be given to any state but, internally, SNAPRed manages these via the allocation of 16 character hexadecimal string ID. This approach allows for future modification of the way that States are defined.</p>
+<p>Each state has an associated folder in the calibration directory and the output of calibration operations in the state are stored and indexed here. SNAPRed is thus able to locate the appropriate calibrations for any input run number.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This method of categorising states replies on the presence of existing PVs. Since these have not always been recorded for all of the above state variables, this imposes the limiation that SNAPRed will only work for runs with numbers exceeding or equal to 46342</p>
+</div>
+</section>
+<section id="data-types">
+<h2>Data types<a class="headerlink" href="#data-types" title="Link to this heading">#</a></h2>
+<p>At the SNS, neutron data are recorded in event mode, which should be considered the native data type. Event mode data are essentially arrays that record a set of properties for each detected neutron. These properties are the neutron’s time-of-flight, the ID of the pixel in which it was detected and the ID of the pulse from which it was generated (this latter can be converted to a “wall clock” time).</p>
+<p>An alternate mode of storing data is to create histograms of events: define a series of discrete bins for a property of interest (say TOF) and then count how many neutron events fall within each bin.</p>
+<p>An important consideration due to the nature of the event mode data type is that the size of the data is proportional to the number of neutrons detected. In contrast, the size of histogrammed data is constant (dictated by the chosen number of bins). This has the consequence that on instrument where the total number of events per dataset is small, events can be a highly efficient way to store the data. However, on instruments with a high flux and large detector coverage event data can become extremely large volume. SNAP sits on the borderline of these two scenarios so SNAPRed takes careful measures to ensure that the various datasets it orchestrates are efficiently stored.</p>
+<p>A design requirement of SNAPRed is to efficiently manage events. <em>This is not yet available in Phase 2.</em></p>
+</section>
+<section id="lite-mode">
+<span id="label-lite"></span><h2>Lite mode<a class="headerlink" href="#lite-mode" title="Link to this heading">#</a></h2>
+<p>During prototyping of SNAPRed, in part addressing the efficient management of events describe above, the concept of <code class="docutils literal notranslate"><span class="pre">Lite</span> <span class="pre">mode</span></code> was developed. This is a process where the entire input event list is relabelled such that events within a fixed 8x8 grid of native pixels on the detector phase are given the same “super pixel” ID. The output of this is process is a “Lite workspace” that contains the same number of events as the original, but has 64 times fewer pixels (18<em>32x32=18432 <em>versus</em> 18</em>256x256=1179648), with almost imperceptible loss of diffraction resolution.</p>
+<p>Lite mode greatly accelerates all calibration and reduction operations that iterate through pixels (for example vanadium absorption correction taking 60 minutes in regular SNAP occurs in ~1 minute for SNAP Lite. Furthermore, Lite mode creates the potential to greatly enhance the effectiveness of event compression (via mantid algorithm <code class="docutils literal notranslate"><span class="pre">CompressEvents</span></code>), although this latter functionality is not implemented in Phase 2</p>
+<p>An important consequence is that the activation of <code class="docutils literal notranslate"><span class="pre">Lite</span> <span class="pre">Mode</span></code> impacts all files or workspaces that depend on pixel IDs. Notably, these include: calibration workspaces, masking workspaces and grouping workspaces (and associated files containing these that are saved to disk). SNAPRed is designed to automatically handle this, but the user should be aware that selecting <code class="docutils literal notranslate"><span class="pre">Lite</span> <span class="pre">Mode</span></code> is conceptually switching to a different (virtual) instrument with 64 times fewer pixels.</p>
+</section>
+<section id="pixel-grouping-definitions">
+<h2>Pixel Grouping Definitions<a class="headerlink" href="#pixel-grouping-definitions" title="Link to this heading">#</a></h2>
+<p>SNAPRed’s diffraction detector system consists of two movable Anger cameras: highly-pixilated TOF-sensitive neutron detectors. This creates a natural flexibility in how detector pixels can be grouped together. As a general rule, adding more pixels together improves counting statistics at the expense of diffraction resolution. A consequence of this is a user should have the ability to easily switch between different pixel grouping schemes (PGS) that describe how pixels are to be combined. Each PGS will consist of a number of subgroups each with their own ID.</p>
+<p>Thus, SNAPRed is intended to be able to manage multiple different PGS and to reduce data from a specified list of these (allowing users multiple views on their data after reduction). The “standard” PGS based on combinations of detector components (<code class="docutils literal notranslate"><span class="pre">All</span></code>,<code class="docutils literal notranslate"><span class="pre">Bank</span></code>,<code class="docutils literal notranslate"><span class="pre">Column</span></code>,<code class="docutils literal notranslate"><span class="pre">2-4</span></code>) exist as defaults, however, it is also possible to specify unique PGS for any given instrument state. An example of this might be a scheme based on scattering angle of pixels. Such schemes differ from detector-component based schemes as the corresponding pixel ID’s will change if the detector moves.</p>
+<p>As they involve pixels IDs, separate PGS <em>must</em> be specified separately for both Lite and non-Lite modes.</p>
+</section>
+<section id="data-binning-considerations">
+<span id="binning-considerations"></span><h2>Data binning considerations<a class="headerlink" href="#data-binning-considerations" title="Link to this heading">#</a></h2>
+<p>Appropriate management of large event TOF diffraction datasets requires intelligent histogramming and/or compression of the raw event data. In general, this operation is lossy and so the binning parameters used must be chosen correctly. In SNAPRed, the appropriate binning parameters are properties of each subgroup for a given state and are calculated for each of these combinations. This calculation is done on the basis of a set of defined instrument parameters, namely, the incoming wavelength band and the instrument diffraction resolution, the latter is parameterised by the TOF-resolution equation - <span id="id1">[<a class="reference internal" href="../bib.html#id5" title="T.G. Worlton, J.D. Jorgensen, R.A. Beyerlein, and D.L. Decker. Multicomponent profile refinement of time-of-flight neutron diffraction data. Nuclear Instruments and Methods, 137(2):331-337, 1976. URL: https://www.sciencedirect.com/science/article/pii/0029554X7690344X, doi:https://doi.org/10.1016/0029-554X(76)90344-X.">1</a>]</span>- and a specification of the relevant value for SNAP.</p>
+<p>User interaction is limited to the specification of the number of bins <code class="docutils literal notranslate"><span class="pre">NBin</span></code> within the FWHM of a measured Bragg peak. This approach exploits logarithmic binning combined with the approximately linear dependence of resolution on wavelength for a TOF diffractometer and means that the chosen <code class="docutils literal notranslate"><span class="pre">NBin</span></code> number of points will be constant for any peak in any subgroup in any state of the instrument. The value used should reflect the final approach to fitting peak shapes and be sufficient to support the numbner of parameters needed. Typically, this would include a Rietveld fit using a back-to-back exponential convolved with a psuedovoigt peak model, which has at least 5 parameters for each peak (position, width, gauss-Lorentz mixing,and the leading and trailing edge exponents) in addition to background model.</p>
+<p>By default, the FWHM used in combination with <code class="docutils literal notranslate"><span class="pre">NBin</span></code> to determine binning is taken from measurements of an ideal sample - taken to be NIST Silicon (640d). All data will be binned during reduction to match this native diffraction resolution of the instrument state. After reduction, it is possible increase the size of binning, downsampling the diffraction resolution, as this may be appropriate in the presense of sample-dependent peak broadening. This downsampling is controlled via specification of a multiplier of <code class="docutils literal notranslate"><span class="pre">NBin</span></code> to ensure that every peak in the output data is sampled with the same binning.</p>
+<p>Note that, when defined as arrays, the length of an array of x-values will exceed that of the corresponding y-values by one (as the x-array contains two bin edges for each y-value)</p>
+</section>
+<section id="symbols-used-in-this-book">
+<h2>Symbols used in this book<a class="headerlink" href="#symbols-used-in-this-book" title="Link to this heading">#</a></h2>
+<p>Throughout this document, some it has been attempted to use consistent set of symbols.</p>
+<section id="a-note-on-indexing">
+<h3>A note on indexing<a class="headerlink" href="#a-note-on-indexing" title="Link to this heading">#</a></h3>
+<p>An important consideration is indexing due to the complex nature of TOF datasets. Each pixel is an independent, TOF-resolving detector that collects a dataset that can be represented as an array: a list of events or a histogram. So, in general, we need to give an index for a specific pixel <em>and</em> an index for a element in an associated data array.</p>
+<p>As a specific example, consider the case where the events in the <span class="math notranslate nohighlight">\(i^{th}\)</span> pixel are histogrammed according to an array of TOF bins. We can refer to this array as <span class="math notranslate nohighlight">\(\mathbf{T}_i\)</span> where <span class="math notranslate nohighlight">\(0\leq i \leq (N_{pix}-1)\)</span> and where <span class="math notranslate nohighlight">\(N_{pix}=1179648\)</span> for the native instrument and <span class="math notranslate nohighlight">\(N_{pix}=18432\)</span> for the Lite instrument (i.e. the number of pixels). The bold font indicates this quantity is an array.</p>
+<p>In turn, we would then refer to the <span class="math notranslate nohighlight">\(j^{th}\)</span> element within the <span class="math notranslate nohighlight">\(i^{th}\)</span> array as <span class="math notranslate nohighlight">\(T_{i,j}\)</span>, no longer using a bold font as this is now a single value. Here, it’s important to remember that, in general, the size of the data arrays can vary between pixels.</p>
+<p>An important operation in data handling within <code class="docutils literal notranslate"><span class="pre">SNAPRed</span></code> is diffraction focusing, whereby the data in multiple spectra are combined, effectively replacing many pixels with a single “super pixel” for each group as defined by a pixel grouping scheme. We will represent diffraction focussed data by enclosing the affected array in <span class="math notranslate nohighlight">\(\{\)</span> and <span class="math notranslate nohighlight">\(\}\)</span> brackets but otherwise use a similar indexing, using capital letters for the indices. Thus, if we used a pixel grouping scheme with <span class="math notranslate nohighlight">\(N_{grp}\)</span> groups of pixels, this will result in <span class="math notranslate nohighlight">\(N_{grp}\)</span> arrays containing d-spacings and the array for the <span class="math notranslate nohighlight">\(I^{th}\)</span> group would be <span class="math notranslate nohighlight">\(\{\mathbf{d}\}_I\)</span>. As above, we can refer to the <span class="math notranslate nohighlight">\(J^{th}\)</span> element within this array using <span class="math notranslate nohighlight">\(\{d\}_{I,J}\)</span></p>
+</section>
+<section id="the-symbols">
+<h3>The symbols<a class="headerlink" href="#the-symbols" title="Link to this heading">#</a></h3>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Symbol</p></th>
+<th class="head"><p>Units</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(h\)</span></p></td>
+<td><p>j.Hz<span class="math notranslate nohighlight">\(^{-1}\)</span></p></td>
+<td><p>Planck’s Constant</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(m_n\)</span></p></td>
+<td><p>kg</p></td>
+<td><p>neutron mass</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\lambda\)</span></p></td>
+<td><p>Å</p></td>
+<td><p>wavelength values</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(T\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\mu\)</span>s</p></td>
+<td><p>TOF values</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(d\)</span></p></td>
+<td><p>Å</p></td>
+<td><p>d-spacing values</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(hkl\)</span></p></td>
+<td><p></p></td>
+<td><p>Miller indices</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(Z\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\mu\)</span>s</p></td>
+<td><p>zeroth order diffractometer constant</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(C\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\mu\)</span>s.Å<span class="math notranslate nohighlight">\(^{-1}\)</span></p></td>
+<td><p>first order diffractometer constant</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(A\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\mu\)</span>s.Å<span class="math notranslate nohighlight">\(^{-2}\)</span></p></td>
+<td><p>second order diffractometer constant</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./coreConcepts"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../intro.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">SNAPRed User Docs v 0.2</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="applicationYML.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Global configuration</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#instrument-states">Instrument States</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-types">Data types</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lite-mode">Lite mode</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pixel-grouping-definitions">Pixel Grouping Definitions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-binning-considerations">Data binning considerations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#symbols-used-in-this-book">Symbols used in this book</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-note-on-indexing">A note on indexing</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-symbols">The symbols</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Malcolm Guthrie
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

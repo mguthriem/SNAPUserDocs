@@ -1,0 +1,592 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Diffraction Calibration part 1: pixel calibration &#8212; SNAPRed User Documentation v0.2</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=36754332"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'diffCalib/diffCal1';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Diffraction Calibration Part 2: Group Calibration" href="diffCal2.html" />
+    <link rel="prev" title="Diffraction Calibration" href="overview.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo2.png" class="logo__image only-light" alt="SNAPRed User Documentation v0.2 - Home"/>
+    <script>document.write(`<img src="../_static/logo2.png" class="logo__image only-dark" alt="SNAPRed User Documentation v0.2 - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    SNAPRed User Docs v 0.2
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../coreConcepts/overview.html">Core Concepts in SNAPRed</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../coreConcepts/applicationYML.html">Global configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="overview.html">Diffraction Calibration</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Diffraction Calibration part 1: pixel calibration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="diffCal2.html">Diffraction Calibration Part 2: Group Calibration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="diffCal_assessment_output.html">Calibration assessment, completion and output</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../normCalib/overview.html">Normalisation Calibration</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../testPanel/overview.html">Test Panel: User Guide</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../testPanel/difcal.html">The DifCal Tab</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testPanel/normcal.html">The NormCal Tab</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../bib.html">References</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/neutrons/SNAPRed" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/neutrons/SNAPRed/issues/new?title=Issue%20on%20page%20%2FdiffCalib/diffCal1.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/diffCalib/diffCal1.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Diffraction Calibration part 1: pixel calibration</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#determining-the-offset">Determining the offset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#single-peak-cross-correlation">Single peak cross correlation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#whole-pattern-cross-correlation">Whole pattern cross correlation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#masking">Masking</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#iteration">Iteration</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cross-correlation-completion">Cross correlation completion</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="diffraction-calibration-part-1-pixel-calibration">
+<span id="label-cc"></span><h1>Diffraction Calibration part 1: pixel calibration<a class="headerlink" href="#diffraction-calibration-part-1-pixel-calibration" title="Link to this heading">#</a></h1>
+<p>The first step of diffraction calibration, Pixel Calibration, is based on the mathematical process of cross correlation (CC) between the data in a reference pixel and adjacent pixels. In SNAPRed, this is governed by the selected Pixel Grouping Scheme. For example, if “Column” grouping is selected, the algorithm will progress through each of the corresponding 6 pixel groups (one for each detector column). <em>In each group</em>, a reference pixel is selected (ensuring that this is always the same pixel for every group in a given pixel grouping scheme), and then the diffraction data in every other pixel in the group is cross-correlated against those in the reference.</p>
+<p>Prior to the cross-correlation calculation, input data that are measured as a function of TOF are converted to d-spacing (this is currently done using the default instrument definition, butwill be extended to use any pre-existing calibration) and histogrammed, using a logarithmic binning scale. Logarithmic binning is essential to enable to full-pattern cross correlation conducted by SNAPRed, discussed below. The selection of binning parameters occurs automatically, with SNAPRed selecting values that are appropriate for the relevant instrument state and selected pixel group.</p>
+<p>The cross-correlation itself is conducted using the mantid algorithm <a class="reference external" href="https://docs.mantidproject.org/nightly/algorithms/CrossCorrelate-v1.html"><code class="docutils literal notranslate"><span class="pre">CrossCorrelate</span></code></a>. The operation is a way to identify how similar two signals are as a function of their offset relative to each other along a shared x-axis. In our case, the input data are histogrammed neutron counts <em>versus</em> d-spacing.</p>
+<p>Since the input spectra contain sharp Bragg peaks at the same d-spacings, the CC will <em>also</em> have a sharp peak. In a perfectly calibrated instrument, the Bragg peaks in any spectra should occur at the same d-spacings and the CC peak would be centred on an offset of zero. However, if errors in calibration are present, they will cause this peak to shift from zero by a certain number of d-space bins, <span class="math notranslate nohighlight">\(N^{off}\)</span>. By correcting for this non-zero offset, we obtain optimal agreement between the observed d-spacings in every pixel.</p>
+<p>An important advantage of the CC approach is that it is independent of any assumption of peak shape <em>and</em> a reliable CC signal can be obtained even when the input data are rather noisy (especially when using whole-pattern cross correlation). This is a significant boon when trying to minimise data collection time needed for calibration.</p>
+<p>In real data, the Bragg signal will be combined with experimental background that (normally) will be broadly varying as a function of d-spacing. This background propagates into the CC with the corollary that the algorithm will work better for high signal-to-background input data (n.b. During testing, specific issues were observed with input silicon powder data measured in a kapton container). It is intended that <code class="docutils literal notranslate"><span class="pre">SNAPRed</span></code> will calculate and subtract a background prior to CC calculation, but this feature isn’t yet available.</p>
+<section id="determining-the-offset">
+<h2>Determining the offset<a class="headerlink" href="#determining-the-offset" title="Link to this heading">#</a></h2>
+<p>Once the CC has been obtained, a second step is to determine the centre of the sharp CC peak corresponding to the value of offset  (<span class="math notranslate nohighlight">\(N^{off}\)</span>), that maximises the overlap of the diffraction data in the two spectra. Again, SNAPRed uses a mantid algorithm <a class="reference external" href="https://docs.mantidproject.org/nightly/algorithms/GetDetectorOffsets-v1.html"><code class="docutils literal notranslate"><span class="pre">GetDetectorOffsets</span></code></a>, which performs peak fitting to extract a peak centre of the CC to return (<span class="math notranslate nohighlight">\(N^{off}\)</span>). SNAPRed currently uses a Gaussian peak shape to fit the CC. <code class="docutils literal notranslate"><span class="pre">GetDetectorOffsets</span></code> will create a workspace of offsets, containing a the numerical value of the determined offset for each pixel.</p>
+<p>Once CC has executed across all pixel groups, and (<span class="math notranslate nohighlight">\(N^{off}_i\)</span>)  has been determined for every pixel <span class="math notranslate nohighlight">\(i\)</span>, the final step in pixel calibration is to apply this to the initial values of the diffractometer constants <span class="math notranslate nohighlight">\(C_i\)</span> used to convert each i from TOF to d-spacing. This calculation is conducted by the mantid algorithm <a class="reference external" href="https://docs.mantidproject.org/nightly/algorithms/ConvertDiffCal-v1.html"><code class="docutils literal notranslate"><span class="pre">ConvertDiffCal</span></code></a> and returns a new set of <span class="math notranslate nohighlight">\(C_i\)</span> values that include the offset correction.</p>
+</section>
+<section id="single-peak-cross-correlation">
+<h2>Single peak cross correlation<a class="headerlink" href="#single-peak-cross-correlation" title="Link to this heading">#</a></h2>
+<p>The most common approach when conducting cross-correlation while calibrating a TOF diffractometer is to select a single Bragg peak. This peak must be common to all pixels within the group of pixels that are being cross correlated.</p>
+<p>In such a calculation, it is appropriate that the input data are a function of d-space and have linear binnning with step size <span class="math notranslate nohighlight">\(\Delta d_{lin}\)</span>. The resultant applied CC correction corresponds to an <em>additive</em> shift of the x-values by <span class="math notranslate nohighlight">\(N^{off}_i \Delta d_{lin}\)</span> of the input data for pixel <span class="math notranslate nohighlight">\(i\)</span> to maximise overlap with the data in the reference pixel.</p>
+<p>The offset is currently managed in <code class="docutils literal notranslate"><span class="pre">Mantid</span></code> by replacing the initial diffractometer constant <span class="math notranslate nohighlight">\(C^{init}_i\)</span> by a new constant <span class="math notranslate nohighlight">\(C^{CC}_i\)</span> that includes the offset correction. This immediately creates consideration that the diffractometer constants are applied by multiplication versus in contrast to an offset, which is additive (a shift of the histogram of y-values along the x-axis by <span class="math notranslate nohighlight">\(N^{off}\)</span> bins). These two distinct operations can only agree at a single point in d-space, <span class="math notranslate nohighlight">\(d'\)</span> (see <a class="reference internal" href="#cc-singlepeak"><span class="std std-ref">Figure</span></a>).</p>
+<figure class="align-default" id="cc-singlepeak">
+<a class="reference internal image-reference" href="../_images/CC_singlePeak.png"><img alt="../_images/CC_singlePeak.png" src="../_images/CC_singlePeak.png" style="height: 400px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 1 </span><span class="caption-text">The solid blue line shows the initial relationship between <span class="math notranslate nohighlight">\(\mathbf{T}_i\)</span> and <span class="math notranslate nohighlight">\(\mathbf{d}_i\)</span> for pixel <span class="math notranslate nohighlight">\(i\)</span>: a straight line with gradient <span class="math notranslate nohighlight">\(\frac{1}{C^{init}_i}\)</span>. Instead of applying an additive offset, which would shift the all values of d by a constant (as indicated by the dashed blue line), the CC-corrected diffractometer constant <span class="math notranslate nohighlight">\(C^{CC}_i\)</span> must be calculated by considering the offset at a specific d-value <span class="math notranslate nohighlight">\(d'\)</span>, using this to calculate the gradient of the red line, which gives the new <span class="math notranslate nohighlight">\(C^{CC}i\)</span>.</span><a class="headerlink" href="#cc-singlepeak" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p>To enable this, a value for <span class="math notranslate nohighlight">\(d'\)</span> (typically the expected d-spacing of the chosen Bragg peak) must be specified when calling the mantid algorithm <code class="docutils literal notranslate"><span class="pre">GetDetectorOffsets</span></code> and, from this, the corresponding corrected diffractometer constant <span class="math notranslate nohighlight">\(C^{CC}_i\)</span> can be obtained. This calculation is supported by chosing the  <em>Relative Offset</em> output mode of <code class="docutils literal notranslate"><span class="pre">GetDetectorOffsets</span></code>.</p>
+</section>
+<section id="whole-pattern-cross-correlation">
+<h2>Whole pattern cross correlation<a class="headerlink" href="#whole-pattern-cross-correlation" title="Link to this heading">#</a></h2>
+<p>SNAPRed adopts a different approach, whereby the entire pattern is cross correlated. This utilises the counts from all present Bragg peaks, reducing the necessary collection time by a factor of 2-3, which is important for the frequent recalibrations necessary on SNAP.</p>
+<p>This approach hinges on ensuring that the input diffraction data for each pixel have been binned <span class="math notranslate nohighlight">\(logarithmically\)</span>. Due to the property of a TOF diffractometer that the diffraction resolution <span class="math notranslate nohighlight">\(\delta d/d\)</span> is approximately constant for a given detector, logarithmic binning ensures that each Bragg peak is (approximately) sampled with the same number of histogram bins. Consequently, intensity from each Bragg peak in the pattern will contribute to the total CC peak according to its own intensity.</p>
+<p>Since the cross-correlation is not conducted using a single peak, there’s no obvious way to select a <span class="math notranslate nohighlight">\(d'\)</span> to scale the offset. However, this issue is also solved by log binning. This is seen from the (mantid) definition of log binning, where successive bin edges are related by the corresponding binning parameter is <span class="math notranslate nohighlight">\(\Delta d_{log}\)</span> according to:</p>
+<p><span class="math notranslate nohighlight">\(d_{j+1}=d_j(1+\Delta d_{log})\)</span></p>
+<p>and, the <span class="math notranslate nohighlight">\(j^{th}\)</span> d value can be calculated from the constant initial d value, <span class="math notranslate nohighlight">\(d_0\)</span> via</p>
+<p><span class="math notranslate nohighlight">\(d_j = d_0(1+\Delta d_{log})^n\)</span></p>
+<p>In this case, the CC offset of of <span class="math notranslate nohighlight">\(N^{off}_j\)</span>, is applied in the exponent:</p>
+<p><span class="math notranslate nohighlight">\(d_j^{CC} = d_0(1+\Delta d_{log})^{(n+N^{off}_j)}\)</span></p>
+<p>This is equivalent to a multiplication and so the extracted <span class="math notranslate nohighlight">\(N^{off}_i\)</span> can be used   directly to scale the diffractometer constants. This will be returned by <code class="docutils literal notranslate"><span class="pre">GetDetectorOffsets</span></code> by choosing the <span class="math notranslate nohighlight">\(signed\)</span> output mode.</p>
+</section>
+<section id="masking">
+<h2>Masking<a class="headerlink" href="#masking" title="Link to this heading">#</a></h2>
+<p>A mask is automatically created for any pixels where the cross-correlation operation fails. This mask is persisted to disk as a property of the calibration and, subsequently, these pixels will not be included in data reduction using that calibration. During the calibration process, it’s important to inspect the output mask to identify pathlological issues (high background in the input data, for instance) with cross correlation that have been observed to lead to large numbers of pixels being masked.</p>
+</section>
+<section id="iteration">
+<h2>Iteration<a class="headerlink" href="#iteration" title="Link to this heading">#</a></h2>
+<p>After running <code class="docutils literal notranslate"><span class="pre">CrossCorrelation</span></code> and <code class="docutils literal notranslate"><span class="pre">GetDetectorOffsets</span></code>, every pixel for which these operations have been successful will have a numerical value of the measured offset, stored in an <code class="docutils literal notranslate"><span class="pre">offsets</span> <span class="pre">workspace</span></code>. The next step is to apply these offsets via an operation that returns the corrected set of diffractometer constant for each pixel <span class="math notranslate nohighlight">\(\mathbf{C}^{CC}\)</span>. This is done using the mantid algorithm <code class="docutils literal notranslate"><span class="pre">ConvertDiffCal</span></code> noting that <code class="docutils literal notranslate"><span class="pre">SNAPRed</span></code> returns offsets using the “Signed” mode. Subsequently, the set of CC-corrected diffractometer constants <span class="math notranslate nohighlight">\(\mathbf{C}^{CC}\)</span>, are then applied to the input data set (Mantid algorithm <code class="docutils literal notranslate"><span class="pre">ApplyDiffCal</span></code>). If the data are then converted from the measured TOF to d-space (Mantid algorithm <code class="docutils literal notranslate"><span class="pre">ConvertUnits</span></code>) the Bragg peaks <em>in each pixel within a specific subgroup</em> will all have been offset towards same d-value, equal to that of the corresponding reference pixel.</p>
+<p>At this point, <code class="docutils literal notranslate"><span class="pre">SNAPRed</span></code> will repeat the cross-correlation to try to further improve agreement between pixels. Since a cross-correlation has already been applied, the offsets calculated in a subsequent operation should be smaller than those in the preceding interation. These operations will continue until a specified <code class="docutils literal notranslate"><span class="pre">Convergence</span> <span class="pre">Threshold</span></code> is reached, which is defined as the average offset of pixels in the group (in units of number of bins) or until a maximum number of iterations (default is 10) is reached.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>If convergence is not achieved before the maximum number of iterations is reached, it is likely there is a problem with your input data (e.g. low signal to background) and the final values of offsets may not be correct.</p>
+</div>
+</section>
+<section id="cross-correlation-completion">
+<h2>Cross correlation completion<a class="headerlink" href="#cross-correlation-completion" title="Link to this heading">#</a></h2>
+<p>Once optimised values for the offsets, and corresponding DIFC’s, have been determined, these should ensure that all common Bragg peaks in any spectrum in the group will have the same d-spacing values as the reference spectrum. However, these values may still be incorrect, due to any present (and unknown) offset of the reference pixel. This necessitates the second step of the diffraction calibration process: group calibration.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./diffCalib"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="overview.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Diffraction Calibration</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="diffCal2.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Diffraction Calibration Part 2: Group Calibration</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#determining-the-offset">Determining the offset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#single-peak-cross-correlation">Single peak cross correlation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#whole-pattern-cross-correlation">Whole pattern cross correlation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#masking">Masking</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#iteration">Iteration</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cross-correlation-completion">Cross correlation completion</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Malcolm Guthrie
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
