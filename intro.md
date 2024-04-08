@@ -49,7 +49,6 @@ SNAPRed Phase 2 can be invoked from within a session on `analysis.sns.gov` by op
 ```
 mantidworkbench --env snapred-qa
 ```
-(todo)=
 ## Specific planned features for Phase 2 not yet built and known defects that will be fixed
 
 1. Apply a calibration to input run. This is part of the reduction phase, but will also allow a _previous_ calibration to be a starting point for a _subsequent_ calibration. (EWM 3143) 
