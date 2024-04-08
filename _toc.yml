@@ -4,11 +4,17 @@
 format: jb-book
 root: intro
 chapters:
-- file: coreConcepts
+- file: coreConcepts/overview
+  sections:
+  - file: coreConcepts/applicationYML
 - file: diffCalib/overview
   sections:
   - file: diffCalib/diffCal1
   - file: diffCalib/diffCal2
   - file: diffCalib/diffCal_assessment_output
 - file: normCalib/overview
+- file: testPanel/overview
+  sections:
+  - file: testPanel/difcal
+  - file: testPanel/normcal
 - file: bib

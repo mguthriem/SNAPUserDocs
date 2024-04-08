@@ -1,3 +1,4 @@
+(label_difcal)=
 # Diffraction Calibration
 
 ## The goal of Diffraction Calibration
@@ -12,10 +13,10 @@ This section specifies the process used by `SNAPRed` for the former goal. The la
 
 The inputs to `Diffraction Calibration` are:
 
-1. A set of neutron powder diffraction data from a known calibrant material, measured in a given instrument state. This is specified via its run number
-2. Crystallographic information on the calibrant material (see below)
+1. A set of neutron powder diffraction data from a known calibrant material, measured in a given instrument state. This is specified via its run number.
+2. Crystallographic information on the calibrant material (see below).
 3. A pixel grouping scheme (e.g. `Column` or any arbitrary scheme) that is used during calibration (as described below), but does not impose any constraint on any subsequent choice of grouping used during reduction.   
-4. A set of parameters governing the calibration workflow. Some of these are fixed and some are variable. The ultimate goal is to fix everything possible to fully automate the calibration process
+4. A set of parameters governing the calibration workflow. Some of these are fixed and some are variable. The ultimate goal is to fix everything possible to fully automate the calibration process.
  
 A note on input data: Despite it's best efforts, SNAPRed will always be limited to the quality of the input calibration data. Known issues have been observed under the following circumstances: 
 
@@ -49,9 +50,9 @@ A future goal is to record the calibrant within the experimental process variabl
 
 A sufficient theoretical background to follow diffraction calibration process is obtained from Bragg's Law: 
 
-$\lambda = 2d_{hkl}\sin\theta$
+$\lambda = 2d\sin\theta$
 
-where $d_{hkl}$ is a d-spacing corresponding to the separation of the cystallographic planes with Miller indices $hkl$ and $\theta$ is half of the scattering angle, and the deBroglie relation for non-relativistic neutrons:
+where $d$ is a d-spacing corresponding to the separation of a particular set of cystallographic planes (labelled by Miller indices $hkl$) and $\theta$ is half of the scattering angle, and the deBroglie relation for non-relativistic neutrons:
 
 $\lambda = \frac{h}{p_n}$
 

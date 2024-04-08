@@ -1,8 +1,9 @@
+(label_CC)=
 # Diffraction Calibration part 1: pixel calibration
 
 The first step of diffraction calibration, Pixel Calibration, is based on the mathematical process of cross correlation (CC) between the data in a reference pixel and adjacent pixels. In SNAPRed, this is governed by the selected Pixel Grouping Scheme. For example, if "Column" grouping is selected, the algorithm will progress through each of the corresponding 6 pixel groups (one for each detector column). _In each group_, a reference pixel is selected (ensuring that this is always the same pixel for every group in a given pixel grouping scheme), and then the diffraction data in every other pixel in the group is cross-correlated against those in the reference.
 
-Prior to the cross-correlation calculation, input data that are measured as a function of TOF are converted to d-spacing (this is currently done using the default instrument definition, but will be extended to use any pre-existing calibration) and histogrammed, using a logarithmic binning scale. Logarithmic binning is essential to enable to full-pattern cross correlation conducted by SNAPRed, discussed below. The selection of binning parameters occurs automatically, with SNAPRed selecting values that are appropriate for the relevant instrument state and selected pixel group.
+Prior to the cross-correlation calculation, input data that are measured as a function of TOF are converted to d-spacing (this is currently done using the default instrument definition, butwill be extended to use any pre-existing calibration) and histogrammed, using a logarithmic binning scale. Logarithmic binning is essential to enable to full-pattern cross correlation conducted by SNAPRed, discussed below. The selection of binning parameters occurs automatically, with SNAPRed selecting values that are appropriate for the relevant instrument state and selected pixel group.
 
 The cross-correlation itself is conducted using the mantid algorithm [`CrossCorrelate`](https://docs.mantidproject.org/nightly/algorithms/CrossCorrelate-v1.html). The operation is a way to identify how similar two signals are as a function of their offset relative to each other along a shared x-axis. In our case, the input data are histogrammed neutron counts _versus_ d-spacing.
 
@@ -20,25 +21,25 @@ Once CC has executed across all pixel groups, and ($N^{off}_i$)  has been determ
 
 ## Single peak cross correlation
 
-The most common approach when conducting cross-correlation while calibrating a TOF diffractometer is to select a single Bragg peak. This pwK must be common to all pixels within the group of pixels that are being cross correlated. 
+The most common approach when conducting cross-correlation while calibrating a TOF diffractometer is to select a single Bragg peak. This peak must be common to all pixels within the group of pixels that are being cross correlated. 
 
 In such a calculation, it is appropriate that the input data are a function of d-space and have linear binnning with step size $\Delta d_{lin}$. The resultant applied CC correction corresponds to an _additive_ shift of the x-values by $N^{off}_i \Delta d_{lin}$ of the input data for pixel $i$ to maximise overlap with the data in the reference pixel.
 
-The offset is currently managed in `Mantid` by replacing the initial diffractometer constant $C^{init}_i$ by a new constant $C^{CC}_i$ that includes the offset correction. This immediately creates consideration that the diffractometer constants are applied by multiplication versus in contrast to an offset, which is additive (a shift of the y-values by $N^{off}$ bins). These two distinct operations can only agree at a single point in d-space, $d'$(see {ref}`Figure <CC_singlePeak>`).   
+The offset is currently managed in `Mantid` by replacing the initial diffractometer constant $C^{init}_i$ by a new constant $C^{CC}_i$ that includes the offset correction. This immediately creates consideration that the diffractometer constants are applied by multiplication versus in contrast to an offset, which is additive (a shift of the histogram of y-values along the x-axis by $N^{off}$ bins). These two distinct operations can only agree at a single point in d-space, $d'$ (see {ref}`Figure <CC_singlePeak>`).   
 
 ```{figure} static/CC_singlePeak.png
 ---
 height: 400px
 name: CC_singlePeak
 ---
-The solid blue line shows the initial relationship between $\mathbf{T}_i$ and $\mathbf{d}_i$ for pixel $i$: a straight line with gradient $\frac{1}{C^{init}_i}$. Instead of applying an additive offset, which would shift the all values of d by a constant (as indicated by the dashed blue line), the CC-corrected diffractometer constant $C^{CC}_i$ must be calculated by considering the offset at a specific d-value $d'$.
+The solid blue line shows the initial relationship between $\mathbf{T}_i$ and $\mathbf{d}_i$ for pixel $i$: a straight line with gradient $\frac{1}{C^{init}_i}$. Instead of applying an additive offset, which would shift the all values of d by a constant (as indicated by the dashed blue line), the CC-corrected diffractometer constant $C^{CC}_i$ must be calculated by considering the offset at a specific d-value $d'$, using this to calculate the gradient of the red line, which gives the new $C^{CC}i$.
 ```
 
-To enable this, a value for $d'$ must be manually specified when calling the mantid algorithm `GetDetectorOffsets` and, from this, the corresponding corrected diffractometer constant $C^{CC}_i$ can be obtained. This calculation is supported by chosing the  _Relative Offset_ output mode of `GetDetectorOffsets`. 
+To enable this, a value for $d'$ (typically the expected d-spacing of the chosen Bragg peak) must be specified when calling the mantid algorithm `GetDetectorOffsets` and, from this, the corresponding corrected diffractometer constant $C^{CC}_i$ can be obtained. This calculation is supported by chosing the  _Relative Offset_ output mode of `GetDetectorOffsets`. 
 
 ## Whole pattern cross correlation
 
-SNAPRed adopts a different approach, whereby the entire pattern is cross correlated. This utilises the counts from all present Bragg peaks, reducing the collection time by a factor of 2-3, which is important for the frequent recalibrations necessay on SNAP.
+SNAPRed adopts a different approach, whereby the entire pattern is cross correlated. This utilises the counts from all present Bragg peaks, reducing the necessary collection time by a factor of 2-3, which is important for the frequent recalibrations necessary on SNAP.
 
 This approach hinges on ensuring that the input diffraction data for each pixel have been binned $logarithmically$. Due to the property of a TOF diffractometer that the diffraction resolution $\delta d/d$ is approximately constant for a given detector, logarithmic binning ensures that each Bragg peak is (approximately) sampled with the same number of histogram bins. Consequently, intensity from each Bragg peak in the pattern will contribute to the total CC peak according to its own intensity.
 
@@ -46,22 +47,32 @@ Since the cross-correlation is not conducted using a single peak, there's no obv
 
 $d_{j+1}=d_j(1+\Delta d_{log})$
 
-and, the $j^{th}$ d value can be calculated from the first first d value, $d_0$, which is a constant via
+and, the $j^{th}$ d value can be calculated from the constant initial d value, $d_0$ via
 
-$d_j = d_0(1=\Delta d_{log})^n
+$d_j = d_0(1+\Delta d_{log})^n$
 
 In this case, the CC offset of of $N^{off}_j$, is applied in the exponent:  
 
-$d_j^{CC} = d_0(1=\Delta d_{log})^(n+N^{off}_j)$
+$d_j^{CC} = d_0(1+\Delta d_{log})^{(n+N^{off}_j)}$
 
 This is equivalent to a multiplication and so the extracted $N^{off}_i$ can be used   directly to scale the diffractometer constants. This will be returned by `GetDetectorOffsets` by choosing the $signed$ output mode. 
 
-## Applying the cross correlation
-
-After running `CrossCorrelation` and `GetDetectorOffsets`, every pixel for which these operations have been successful will have a numerical value of the measured offset, stored in an `offsets workspace`. 
-
-The next step is to apply these offsets via an operation that returns the corrected set of diffractometer constant for each pixel $\mathbf{C^{CC}}$. This is done using the mantid algorithm `ConvertDiffCal` noting that `SNAPRed` returns offsets in using the "Signed" mode. Subsequently, the set of CC-corrected diffractometer constants $C^{CC}$, which are then applied to the input data set (Mantid algorithm `ApplyDiffCal`). The data are then converted from the measured TOF to d-space (Mantid algorithm `ConvertUnits`) with the result that Bragg peaks _in each pixel within a specific subgroup_ will all have the same d-values, equal to those of the corresponding reference pixel. These values may still be incorrect, due to any present (and unknown) offset of the reference pixel. This necessitates the second step of the diffraction calibration process described below.
-
 ## Masking
 
-A mask is automatically created for any pixels where this operation fails and. This mask is persisted to disk as a property of the calibration and, subsequently, these pixels will not be included in data reduction using that calibration. During the calibration process, it's important to inspect the output mask to identify pathlological issues (high background in the input data, for instance) with cross correlation that have been observed to lead to large numbers of pixels being masked.
+A mask is automatically created for any pixels where the cross-correlation operation fails. This mask is persisted to disk as a property of the calibration and, subsequently, these pixels will not be included in data reduction using that calibration. During the calibration process, it's important to inspect the output mask to identify pathlological issues (high background in the input data, for instance) with cross correlation that have been observed to lead to large numbers of pixels being masked.
+
+## Iteration
+
+After running `CrossCorrelation` and `GetDetectorOffsets`, every pixel for which these operations have been successful will have a numerical value of the measured offset, stored in an `offsets workspace`. The next step is to apply these offsets via an operation that returns the corrected set of diffractometer constant for each pixel $\mathbf{C}^{CC}$. This is done using the mantid algorithm `ConvertDiffCal` noting that `SNAPRed` returns offsets using the "Signed" mode. Subsequently, the set of CC-corrected diffractometer constants $\mathbf{C}^{CC}$, are then applied to the input data set (Mantid algorithm `ApplyDiffCal`). If the data are then converted from the measured TOF to d-space (Mantid algorithm `ConvertUnits`) the Bragg peaks _in each pixel within a specific subgroup_ will all have been offset towards same d-value, equal to that of the corresponding reference pixel.
+
+At this point, `SNAPRed` will repeat the cross-correlation to try to further improve agreement between pixels. Since a cross-correlation has already been applied, the offsets calculated in a subsequent operation should be smaller than those in the preceding interation. These operations will continue until a specified `Convergence Threshold` is reached, which is defined as the average offset of pixels in the group (in units of number of bins) or until a maximum number of iterations (default is 10) is reached.
+
+```{warning}
+If convergence is not achieved before the maximum number of iterations is reached, it is likely there is a problem with your input data (e.g. low signal to background) and the final values of offsets may not be correct.
+```
+ 
+
+## Cross correlation completion
+
+Once optimised values for the offsets, and corresponding DIFC's, have been determined, these should ensure that all common Bragg peaks in any spectrum in the group will have the same d-spacing values as the reference spectrum. However, these values may still be incorrect, due to any present (and unknown) offset of the reference pixel. This necessitates the second step of the diffraction calibration process: group calibration.
+
