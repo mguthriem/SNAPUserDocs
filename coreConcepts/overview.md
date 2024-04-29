@@ -16,7 +16,7 @@ SNAPRed can automatically identify state, on the basis of a provided run number,
 Each state has an associated folder in the calibration directory and the output of calibration operations in the state are stored and indexed here. SNAPRed is thus able to locate the appropriate calibrations for any input run number.  
 
 ```{warning}
-This method of categorising states replies on the presence of existing PVs. Since these have not always been recorded for all of the above state variables, this imposes the limiation that SNAPRed will only work for runs with numbers exceeding or equal to 46342 
+This method of categorising states relies on the presence of existing PVs. Since these have not always been recorded for all of the above state variables, this imposes the limiation that SNAPRed will only work for runs with numbers exceeding or equal to 46342 
 ```
 
 ## Data types
